@@ -63,3 +63,8 @@ class Vocabulary(models.Model):
 
 class ExmSentence(models.Model):
     ES_id = models.AutoField(max_length,primary_key=True)
+    ES_sen = models.TextField()
+    ES_definition = models.TextField()
+    ES_voc_id = models.ForeignKey('Vocabulary')
+
+
