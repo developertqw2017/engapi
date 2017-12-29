@@ -52,3 +52,14 @@ class UserNewsMeta(models.Model):
     is_reviewed = BooleanField(default=False)
     UNM_id = ForeignKey('News')
 
+class Vocabulary(models.Model):
+    Voc_id = models.IntergerField(max_length = 4)
+    cn_definition = models.CharField(max_length = 80)
+    en_definition = models.CharField(max_length = 80)
+    content = models.CharField(max_length = 30)
+    content_type = models.choices('vocabulary','phrase')
+    uk_audio = models.URLField()
+    us_audio = models.URLField()
+
+class ExmSentence(models.Model):
+    ES_id = models.AutoField(max_length,primary_key=True)
