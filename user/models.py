@@ -28,8 +28,8 @@ class UserBaseInfo(models.Model):
 
 
 class News(models.Model):
-    STATUS_CHOICES=('publish','verify','fail')
-    COMMENT_STATUS_CHOICES=('open','close')
+    STATUS_CHOICES=(('pub','publish'),('ver','verify'),('f','fail'))
+    COMMENT_STATUS_CHOICES=(('o','open'),('c','close'))
     Nid = models.AutoField(max_length = 4, primary_key = True)
     Nauthor = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
     Ndate = models.DateTimeField()
@@ -55,7 +55,7 @@ class UserNewsMeta(models.Model):
     UNM_id = models.ForeignKey(News, on_delete = models.CASCADE)
 
 class Vocabulary(models.Model):
-    CONTENT_TYPE_CHOICES = ('vocabulary','phrase')
+    CONTENT_TYPE_CHOICES = (('voc','vocabulary'),('ph','phrase'))
     Voc_id = models.IntegerField(max_length = 4)
     cn_definition = models.CharField(max_length = 80)
     en_definition = models.CharField(max_length = 80)
