@@ -12,6 +12,7 @@ def index(request):
 def showUserBaseInfo(request, Uid):
     Uid = urllib.parse.unquote(Uid)
     UBinfo = UserBaseInfo.objects.get(UBid = Uid)
+    UBinfo.__delattr__('_state')
     resp = json.dumps(UBinfo.__dict__)
     return HttpResponse(resp)
 
@@ -19,6 +20,7 @@ def showUserBaseInfo(request, Uid):
 def showComment(request, Comid):
     Comid = urllib.parse.unquote(Comid)
     UComment = UserComment.objects.get(UBcomment_id = Comid)
+    UComment.__delattr__('_state')
     resp = json.dumps(UComment.__dict__)
     return HttpResponse(resp)
 
@@ -26,6 +28,7 @@ def showComment(request, Comid):
 def showNews(request, Nid):
     Nid = urllib.parse.unquote(Nid)
     Ncontent = News.objects.get(Nid = Nid)
+    Ncontent.__delattr__('_state')
     resp = json.dumps(Ncontent.__dict__)
     return HttpResponse(resp)
 
@@ -33,6 +36,7 @@ def showNews(request, Nid):
 def showNews_by_author(request, Nauthor):
     Nauthor = urllib.parse.unquote(Nauthor)
     Ncontent = News.objects.get(Nauthor = Nauthor)
+    Ncontent.__delattr__('_state')
     resp = json.dumps(Ncontent.__dict__)
     return HttpResponse(resp)
 
@@ -40,6 +44,7 @@ def showNews_by_author(request, Nauthor):
 def showNews_by_title_cn(request, Ntitle_cn):
     Ntitle_cn = urllib.parse.unquote(Ntitle_cn)
     Ncontent = News.objects.get(Ntitle_cn = Ntitle_cn)
+    Ncontent.__delattr__('_state')
     resp = json.dumps(Ncontent.__dict__)
     return HttpResponse(resp)
 
@@ -47,5 +52,6 @@ def showNews_by_title_cn(request, Ntitle_cn):
 def showNews_by_title_en(request, Ntitle_en):
     Ntitle_en = urllib.parse.unquote(Ntitle_en)
     Ncontent = News.objects.get(Ntitle_en = Ntitle_en)
+    Ncontent.__delattr__('_state')
     resp = json.dumps(Ncontent.__dict__)
     return HttpResponse(resp)
