@@ -2,22 +2,6 @@ from django.db import models
 import datetime
 
 # Create your models here.
-class UserAccount(models.Model):
-    Uid = models.AutoField(primary_key = True)
-    Uname = models.CharField(max_length=30)
-    Uaccount = models.CharField(max_length=30)
-    Upass = models.CharField(max_length=30)
-
-class UserComment(models.Model):
-    UBcomment_id = models.AutoField(max_length = 4, primary_key = True)
-    UBcomment_date = models.DateTimeField(default = datetime.datetime.now())
-    UBcomment = models.CharField(max_length = 200)
-    UBcomment_to = models.IntegerField()
-    UBComment_by = models.ForeignKey(UserAccount, on_delete = models.CASCADE)
-    UBcomment_IP = models.CharField(max_length = 50)
-    UBcomment_approved = models.BooleanField(default = "TRUE")
-    UBcomment_parent = models.IntegerField()
-
 
 class UserBaseInfo(models.Model):
     UBage = models.IntegerField()
@@ -27,11 +11,28 @@ class UserBaseInfo(models.Model):
     UBsex = models.BooleanField()
     UBphone_number = models.IntegerField()
     UBprofile_photo_url = models.URLField()
-    UBid = models.ForeignKey(UserAccount, on_delete = models.CASCADE)
+    UBid = models.AutoField(primary_key = True)
     UBfollowing_num = models.IntegerField()
     UBfollower_num = models.IntegerField()
     UBreading_num = models.IntegerField()
+ 
+class UserComment(models.Model):
+    UBcomment_id = models.AutoField(max_length = 4, primary_key = True)
+    UBcomment_date = models.DateTimeField(default = datetime.datetime.now())
+    UBcomment = models.CharField(max_length = 200)
+    UBcomment_to = models.IntegerField()
+    UBComment_by = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
+    UBcomment_IP = models.CharField(max_length = 50)
+    UBcomment_approved = models.BooleanField(default = "TRUE")
+    UBcomment_parent = models.IntegerField()
     UBreading_play_num = models.IntegerField()
+
+class UserAccount(models.Model):
+    Uid = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
+    Uname = models.CharField(max_length=30)
+    Uaccount = models.CharField(max_length=30)
+    Upass = models.CharField(max_length=30)
+
 
 class News(models.Model):
     def __str__(self):
@@ -51,7 +52,7 @@ class News(models.Model):
     Npost_parent = models.IntegerField()
     Nlength = models.IntegerField(max_length = 3)
     Ngrade_info = models.CharField(max_length = 14)
-    Nhas_audio = models.BooleanField(default = True)
+    Nhas_audio = models.BooleanField(default = "True")
     Nhas_video = models.BooleanField(default = False)
     Nsummary = models.TextField()
     Nnum_reviews = models.IntegerField()
@@ -86,27 +87,31 @@ class WordSet(models.Model):
     WS_id = models.ForeignKey(UserAccount, on_delete = models.CASCADE)
     WS_voc_book = models.CharField(max_length = 20)
     WS_pronunciation = models.IntegerField(choices = PRONUNCIATION)
-    WS_translate_en = models.BooleanField(default = True)
-    WS_translate_cn = models.BooleanField(default = True)
-    WS_voc_auto_pron = models.BooleanField(default = True)
-    WS_sentence_auto_pron = models.BoolenField(default = True)
-    WS_disp_note = models.BoolenField(default = True)
+    WS_translate_en = models.BooleanField(default = "True")
+    WS_translate_cn = models.BooleanField(default = "True")
+    WS_voc_auto_pron = models.BooleanField(default = "True")
+    WS_sentence_auto_pron = models.BooleanField(default = "True")
+    WS_disp_note = models.BooleanField(default = "True")
     WS_stu_degree = models.IntegerField(choices = STU_DEGREE)
     WS_stu_times = models.IntegerField(default = 5)
     WS_stu_volume = models.IntegerField(default = 100)
 
 class UserResource(models.Model):
-    R_id = models.AutoField(primary_key = True)
+    R_id = models.AutoField(primary_key = "True")
     R_name = models.CharField(max_length = 50)
     R_price = models.FloatField(default = 0.0)
     R_url = models.URLField()
-    R_uid = models.ForeignKey(UserBaseInfo.UBid, on_delete = models.CASCADE)
-    R_has = models.BooleanField(default = True)
+    R_uid = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
+    R_has = models.BooleanField(default = "True")
 
 class UserJournal(models.Model):
-    UJ_id = models.AutoField(primary_key = True)
+    UJ_id = models.AutoField(primary_key = "True")
     UJ_title = models.CharField(max_length = 50)
     UJ_content = models.TextField()
-    UJ_create_date = models.DateField(auto_now_add = True)
-    UJ_update_date = models.DateField(auto_now = True)
-    UJ_uid = models.ForeignKey(UserBaseInfo.UBid, on_delete = models.CASCADE)
+    UJ_create_date = models.DateField(auto_now_add = "True")
+    UJ_update_date = models.DateField(auto_now = "True")
+    UJ_uid = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
+
+class UserFollower(models.Model):
+    UF_uid = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
+    UF_friend_id = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE, related_name = 'friend_id')
