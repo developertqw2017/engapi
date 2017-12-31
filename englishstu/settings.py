@@ -124,3 +124,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# SESSION——ENGINE前置条件 python 第三方库 django-redis-sessions
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_PORT = '6379'
+SESSION_REDIS_DB = 0
+SESSION_REDIS_PASSWORD = 'password'
+SESSION_REDIS_PREFIX = 'session'
+
+# If you prefer domain socket connetction, you can just add this line instead of SESSION_REDIS_HOST and SESSION_REDIS_PORT.
+
+SESSION_REDIS_UNIX_DOMAIN_SOCKET_PATH = '/var/run/redis/redis.sock'
