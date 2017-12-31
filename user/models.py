@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 class UserAccount(models.Model):
@@ -9,7 +10,7 @@ class UserAccount(models.Model):
 
 class UserComment(models.Model):
     UBcomment_id=models.AutoField(max_length = 4, primary_key = True)
-    UBcomment_date=models.DateTimeField()
+    UBcomment_date=models.DateTimeField(default = datetime.datetime.now())
     UBcomment=models.CharField(max_length=200)
     UBcomment_to=models.IntegerField()
     UBComment_by=models.ForeignKey(UserAccount,on_delete=models.CASCADE)
@@ -21,24 +22,28 @@ class UserComment(models.Model):
 class UserBaseInfo(models.Model):
     UBage=models.IntegerField()
     UBemail=models.CharField(max_length=50)
-    UBfriend=models.ForeignKey(UserAccount, on_delete = models.CASCADE)
+    UBfriend=models.IntegerField()
     UBsignature=models.CharField(max_length=100)
     UBsex=models.BooleanField()
     UBphone_number=models.IntegerField()
-
+    UBprofile_photo_url=models.URLField()
+    UBid = models.ForeignKey(UserAccount, on_delete = models.CASCADE)
 
 class News(models.Model):
+    def __str__(self):
+        return self.Ncontent
+
     STATUS_CHOICES=(('pub','publish'),('ver','verify'),('f','fail'))
     COMMENT_STATUS_CHOICES=(('o','open'),('c','close'))
     Nid = models.AutoField(max_length = 4, primary_key = True)
     Nauthor = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
-    Ndate = models.DateTimeField()
+    Ndate = models.DateTimeField(default = datetime.datetime.now())
     Ncontent = models.TextField()
     Ntitle_cn = models.CharField(max_length=60)
     Ntitle_en = models.CharField(max_length=60)
     Nstatus = models.CharField(max_length=12,choices = STATUS_CHOICES)
     Ncomment_status = models.CharField(max_length=12,choices = COMMENT_STATUS_CHOICES)
-    Npost_modified = models.DateTimeField()
+    Npost_modified = models.DateTimeField(default = datetime.datetime.now())
     Npost_parent = models.IntegerField()
     Nlength = models.IntegerField(max_length = 3)
     Ngrade_info = models.CharField(max_length=14)
