@@ -11,20 +11,20 @@ class UserComment(models.Model):
     UBcomment_id=models.AutoField(max_length = 4, primary_key = True)
     UBcomment_date=models.DateTimeField()
     UBcomment=models.CharField(max_length=200)
-    UBcomment_to=models.IntegerField(max_length = 4)
+    UBcomment_to=models.IntegerField()
     UBComment_by=models.ForeignKey(UserAccount,on_delete=models.CASCADE)
     UBcomment_IP=models.CharField(max_length=50)
     UBcomment_approved=models.BooleanField(default="TRUE")
-    UBcomment_parent=models.IntegerField(max_length = 4)
+    UBcomment_parent=models.IntegerField()
 
 
 class UserBaseInfo(models.Model):
-    UBage=models.IntegerField(max_length=4)
+    UBage=models.IntegerField()
     UBemail=models.CharField(max_length=50)
     UBfriend=models.ForeignKey(UserAccount, on_delete = models.CASCADE)
     UBsignature=models.CharField(max_length=100)
     UBsex=models.BooleanField()
-    UBphone_number=models.IntegerField(max_length=10)
+    UBphone_number=models.IntegerField()
 
 
 class News(models.Model):
@@ -39,13 +39,13 @@ class News(models.Model):
     Nstatus = models.CharField(max_length=12,choices = STATUS_CHOICES)
     Ncomment_status = models.CharField(max_length=12,choices = COMMENT_STATUS_CHOICES)
     Npost_modified = models.DateTimeField()
-    Npost_parent = models.IntegerField(max_length = 4)
+    Npost_parent = models.IntegerField()
     Nlength = models.IntegerField(max_length = 3)
     Ngrade_info = models.CharField(max_length=14)
     Nhas_audio = models.BooleanField(default=True)
     Nhas_video = models.BooleanField(default=False)
     Nsummary = models.TextField()
-    Nnum_reviews = models.IntegerField(max_length=4)
+    Nnum_reviews = models.IntegerField()
 
 
 class UserNewsMeta(models.Model):
@@ -56,7 +56,7 @@ class UserNewsMeta(models.Model):
 
 class Vocabulary(models.Model):
     CONTENT_TYPE_CHOICES = (('voc','vocabulary'),('ph','phrase'))
-    Voc_id = models.IntegerField(max_length = 4)
+    Voc_id = models.IntegerField()
     cn_definition = models.CharField(max_length = 80)
     en_definition = models.CharField(max_length = 80)
     content = models.CharField(max_length = 30)
