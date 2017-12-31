@@ -28,6 +28,10 @@ class UserBaseInfo(models.Model):
     UBphone_number = models.IntegerField()
     UBprofile_photo_url = models.URLField()
     UBid = models.ForeignKey(UserAccount, on_delete = models.CASCADE)
+    UBfollowing_num = models.IntegerField()
+    UBfollower_num = models.IntegerField()
+    UBreading_num = models.IntegerField()
+    UBreading_play_num = models.IntegerField()
 
 class News(models.Model):
     def __str__(self):
@@ -37,13 +41,13 @@ class News(models.Model):
     COMMENT_STATUS_CHOICES = (('o','open'),('c','close'))
     Nid = models.AutoField(max_length = 4, primary_key = True)
     Nauthor = models.ForeignKey(UserBaseInfo, on_delete = models.CASCADE)
-    Ndate = models.DateTimeField(default = datetime.datetime.now())
+    Ndate = models.DateTimeField(auto_now_add = True)
     Ncontent = models.TextField()
     Ntitle_cn = models.CharField(max_length = 60)
     Ntitle_en = models.CharField(max_length = 60)
     Nstatus = models.CharField(max_length=12,choices = STATUS_CHOICES)
     Ncomment_status = models.CharField(max_length = 12,choices = COMMENT_STATUS_CHOICES)
-    Npost_modified = models.DateTimeField(default = datetime.datetime.now())
+    Npost_modified = models.DateTimeField(auto_now = True)
     Npost_parent = models.IntegerField()
     Nlength = models.IntegerField(max_length = 3)
     Ngrade_info = models.CharField(max_length = 14)
@@ -90,4 +94,19 @@ class WordSet(models.Model):
     WS_stu_degree = models.IntegerField(choices = STU_DEGREE)
     WS_stu_times = models.IntegerField(default = 5)
     WS_stu_volume = models.IntegerField(default = 100)
-    
+
+class UserResource(models.Model):
+    R_id = models.AutoField(primary_key = True)
+    R_name = models.CharField(max_length = 50)
+    R_price = models.FloatField(default = 0.0)
+    R_url = models.URLField()
+    R_uid = models.ForeignKey(UserBaseInfo.UBid, on_delete = models.CASCADE)
+    R_has = models.BooleanField(default = True)
+
+class UserJournal(models.Model):
+    UJ_id = models.AutoField(primary_key = True)
+    UJ_title = models.CharField(max_length = 50)
+    UJ_content = models.TextField()
+    UJ_create_date = models.DateField(auto_now_add = True)
+    UJ_update_date = models.DateField(auto_now = True)
+    UJ_uid = models.ForeignKey(UserBaseInfo.UBid, on_delete = models.CASCADE)
