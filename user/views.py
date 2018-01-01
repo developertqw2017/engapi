@@ -101,7 +101,6 @@ def UserJournal(request, uid):
 
 
 
-r = redis.StrictRedis(host='localhost',port='6379',db=0)
 
 def index(request):
     art = {}
@@ -121,6 +120,7 @@ def usLogin(request):
         # 获取该用户在user表中对应的id
         # 校验成功
         if upass == pwd:
+            r = redis.StrictRedis(host='localhost',port='6379',db=0)
             r.hincrby('user:%s' %us, 'login_count', 1)     # 登陆次数累加
             r.hset('user:%s' %us, 'last_login_date', datetime.datetime.now())  # 添加最近登陆
             # set Cookies

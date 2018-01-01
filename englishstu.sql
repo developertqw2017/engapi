@@ -82,7 +82,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can add user',2,'add_user'),(5,'Can change user',2,'change_user'),(6,'Can delete user',2,'delete_user'),(7,'Can add permission',3,'add_permission'),(8,'Can change permission',3,'change_permission'),(9,'Can delete permission',3,'delete_permission'),(10,'Can add group',4,'add_group'),(11,'Can change group',4,'change_group'),(12,'Can delete group',4,'delete_group'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add user base info',7,'add_userbaseinfo'),(20,'Can change user base info',7,'change_userbaseinfo'),(21,'Can delete user base info',7,'delete_userbaseinfo'),(22,'Can add vocabulary',8,'add_vocabulary'),(23,'Can change vocabulary',8,'change_vocabulary'),(24,'Can delete vocabulary',8,'delete_vocabulary'),(25,'Can add exm sentence',9,'add_exmsentence'),(26,'Can change exm sentence',9,'change_exmsentence'),(27,'Can delete exm sentence',9,'delete_exmsentence'),(28,'Can add news',10,'add_news'),(29,'Can change news',10,'change_news'),(30,'Can delete news',10,'delete_news'),(31,'Can add user news meta',11,'add_usernewsmeta'),(32,'Can change user news meta',11,'change_usernewsmeta'),(33,'Can delete user news meta',11,'delete_usernewsmeta'),(34,'Can add user account',12,'add_useraccount'),(35,'Can change user account',12,'change_useraccount'),(36,'Can delete user account',12,'delete_useraccount'),(37,'Can add user comment',13,'add_usercomment'),(38,'Can change user comment',13,'change_usercomment'),(39,'Can delete user comment',13,'delete_usercomment');
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can add permission',2,'add_permission'),(5,'Can change permission',2,'change_permission'),(6,'Can delete permission',2,'delete_permission'),(7,'Can add group',3,'add_group'),(8,'Can change group',3,'change_group'),(9,'Can delete group',3,'delete_group'),(10,'Can add user',4,'add_user'),(11,'Can change user',4,'change_user'),(12,'Can delete user',4,'delete_user'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add user news meta',7,'add_usernewsmeta'),(20,'Can change user news meta',7,'change_usernewsmeta'),(21,'Can delete user news meta',7,'delete_usernewsmeta'),(22,'Can add vocabulary',8,'add_vocabulary'),(23,'Can change vocabulary',8,'change_vocabulary'),(24,'Can delete vocabulary',8,'delete_vocabulary'),(25,'Can add news',9,'add_news'),(26,'Can change news',9,'change_news'),(27,'Can delete news',9,'delete_news'),(28,'Can add exm sentence',10,'add_exmsentence'),(29,'Can change exm sentence',10,'change_exmsentence'),(30,'Can delete exm sentence',10,'delete_exmsentence'),(31,'Can add user journal',11,'add_userjournal'),(32,'Can change user journal',11,'change_userjournal'),(33,'Can delete user journal',11,'delete_userjournal'),(34,'Can add user base info',12,'add_userbaseinfo'),(35,'Can change user base info',12,'change_userbaseinfo'),(36,'Can delete user base info',12,'delete_userbaseinfo'),(37,'Can add user account',13,'add_useraccount'),(38,'Can change user account',13,'change_useraccount'),(39,'Can delete user account',13,'delete_useraccount'),(40,'Can add user resource',14,'add_userresource'),(41,'Can change user resource',14,'change_userresource'),(42,'Can delete user resource',14,'delete_userresource'),(43,'Can add word set',15,'add_wordset'),(44,'Can change word set',15,'change_wordset'),(45,'Can delete word set',15,'delete_wordset'),(46,'Can add user follower',16,'add_userfollower'),(47,'Can change user follower',16,'change_userfollower'),(48,'Can delete user follower',16,'delete_userfollower'),(49,'Can add user comment',17,'add_usercomment'),(50,'Can change user comment',17,'change_usercomment'),(51,'Can delete user comment',17,'delete_usercomment');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +230,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +239,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(4,'auth','group'),(3,'auth','permission'),(2,'auth','user'),(5,'contenttypes','contenttype'),(6,'sessions','session'),(9,'user','exmsentence'),(10,'user','news'),(12,'user','useraccount'),(7,'user','userbaseinfo'),(13,'user','usercomment'),(11,'user','usernewsmeta'),(8,'user','vocabulary');
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(6,'sessions','session'),(10,'user','exmsentence'),(9,'user','news'),(13,'user','useraccount'),(12,'user','userbaseinfo'),(17,'user','usercomment'),(16,'user','userfollower'),(11,'user','userjournal'),(7,'user','usernewsmeta'),(14,'user','userresource'),(8,'user','vocabulary'),(15,'user','wordset');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2017-12-31 11:21:56.751889'),(2,'auth','0001_initial','2017-12-31 11:21:58.184182'),(3,'admin','0001_initial','2017-12-31 11:21:58.501001'),(4,'admin','0002_logentry_remove_auto_add','2017-12-31 11:21:58.517993'),(5,'contenttypes','0002_remove_content_type_name','2017-12-31 11:21:58.753951'),(6,'auth','0002_alter_permission_name_max_length','2017-12-31 11:21:58.777252'),(7,'auth','0003_alter_user_email_max_length','2017-12-31 11:21:58.810725'),(8,'auth','0004_alter_user_username_opts','2017-12-31 11:21:58.826703'),(9,'auth','0005_alter_user_last_login_null','2017-12-31 11:21:58.931196'),(10,'auth','0006_require_contenttypes_0002','2017-12-31 11:21:58.942018'),(11,'auth','0007_alter_validators_add_error_messages','2017-12-31 11:21:58.957789'),(12,'auth','0008_alter_user_username_max_length','2017-12-31 11:21:59.171171'),(13,'auth','0009_alter_user_last_name_max_length','2017-12-31 11:21:59.203319'),(14,'sessions','0001_initial','2017-12-31 11:21:59.299910'),(15,'user','0001_initial','2017-12-31 11:22:00.492340');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2017-12-31 18:06:09.730166'),(2,'auth','0001_initial','2017-12-31 18:06:11.234995'),(3,'admin','0001_initial','2017-12-31 18:06:11.568169'),(4,'admin','0002_logentry_remove_auto_add','2017-12-31 18:06:11.588205'),(5,'contenttypes','0002_remove_content_type_name','2017-12-31 18:06:11.817939'),(6,'auth','0002_alter_permission_name_max_length','2017-12-31 18:06:11.844383'),(7,'auth','0003_alter_user_email_max_length','2017-12-31 18:06:11.874751'),(8,'auth','0004_alter_user_username_opts','2017-12-31 18:06:11.894139'),(9,'auth','0005_alter_user_last_login_null','2017-12-31 18:06:12.005014'),(10,'auth','0006_require_contenttypes_0002','2017-12-31 18:06:12.015243'),(11,'auth','0007_alter_validators_add_error_messages','2017-12-31 18:06:12.031144'),(12,'auth','0008_alter_user_username_max_length','2017-12-31 18:06:12.279412'),(13,'auth','0009_alter_user_last_name_max_length','2017-12-31 18:06:12.307927'),(14,'sessions','0001_initial','2017-12-31 18:06:12.411941'),(15,'user','0001_initial','2017-12-31 18:06:14.552739');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,8 +346,8 @@ CREATE TABLE `user_news` (
   `Nnum_reviews` int(11) NOT NULL,
   `Nauthor_id` int(11) NOT NULL,
   PRIMARY KEY (`Nid`),
-  KEY `user_news_Nauthor_id_ab340c98_fk_user_userbaseinfo_id` (`Nauthor_id`),
-  CONSTRAINT `user_news_Nauthor_id_ab340c98_fk_user_userbaseinfo_id` FOREIGN KEY (`Nauthor_id`) REFERENCES `user_userbaseinfo` (`id`)
+  KEY `user_news_Nauthor_id_ab340c98_fk_user_userbaseinfo_UBid` (`Nauthor_id`),
+  CONSTRAINT `user_news_Nauthor_id_ab340c98_fk_user_userbaseinfo_UBid` FOREIGN KEY (`Nauthor_id`) REFERENCES `user_userbaseinfo` (`UBid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -368,12 +368,15 @@ DROP TABLE IF EXISTS `user_useraccount`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_useraccount` (
-  `Uid` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Uname` varchar(30) NOT NULL,
   `Uaccount` varchar(30) NOT NULL,
   `Upass` varchar(30) NOT NULL,
-  PRIMARY KEY (`Uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `Uid_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_useraccount_Uid_id_c1cfbd4f_fk_user_userbaseinfo_UBid` (`Uid_id`),
+  CONSTRAINT `user_useraccount_Uid_id_c1cfbd4f_fk_user_userbaseinfo_UBid` FOREIGN KEY (`Uid_id`) REFERENCES `user_userbaseinfo` (`UBid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +385,7 @@ CREATE TABLE `user_useraccount` (
 
 LOCK TABLES `user_useraccount` WRITE;
 /*!40000 ALTER TABLE `user_useraccount` DISABLE KEYS */;
-INSERT INTO `user_useraccount` VALUES (1,'tqw','tqw503417','tqw503417');
+INSERT INTO `user_useraccount` VALUES (2,'tqw','tqw503417','tqw503417',1);
 /*!40000 ALTER TABLE `user_useraccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,7 +397,6 @@ DROP TABLE IF EXISTS `user_userbaseinfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_userbaseinfo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `UBage` int(11) NOT NULL,
   `UBemail` varchar(50) NOT NULL,
   `UBfriend` int(11) NOT NULL,
@@ -402,10 +404,11 @@ CREATE TABLE `user_userbaseinfo` (
   `UBsex` tinyint(1) NOT NULL,
   `UBphone_number` int(11) NOT NULL,
   `UBprofile_photo_url` varchar(200) NOT NULL,
-  `UBid_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_userbaseinfo_UBid_id_11e17743_fk_user_useraccount_Uid` (`UBid_id`),
-  CONSTRAINT `user_userbaseinfo_UBid_id_11e17743_fk_user_useraccount_Uid` FOREIGN KEY (`UBid_id`) REFERENCES `user_useraccount` (`Uid`)
+  `UBid` int(11) NOT NULL AUTO_INCREMENT,
+  `UBfollowing_num` int(11) NOT NULL,
+  `UBfollower_num` int(11) NOT NULL,
+  `UBreading_num` int(11) NOT NULL,
+  PRIMARY KEY (`UBid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -415,7 +418,7 @@ CREATE TABLE `user_userbaseinfo` (
 
 LOCK TABLES `user_userbaseinfo` WRITE;
 /*!40000 ALTER TABLE `user_userbaseinfo` DISABLE KEYS */;
-INSERT INTO `user_userbaseinfo` VALUES (1,15,'2144799613@qq.com',1,'xE8xA1XA8xE9xA2',0,1592741,'http://120.76.140.147/EnglishStu/header.php',1);
+INSERT INTO `user_userbaseinfo` VALUES (19,'2144799613@qq.com',1,'',0,123145,'http://120.76.140.147/EnglishStu/header.php',1,55,31,4564);
 /*!40000 ALTER TABLE `user_userbaseinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,10 +437,11 @@ CREATE TABLE `user_usercomment` (
   `UBcomment_IP` varchar(50) NOT NULL,
   `UBcomment_approved` tinyint(1) NOT NULL,
   `UBcomment_parent` int(11) NOT NULL,
+  `UBreading_play_num` int(11) NOT NULL,
   `UBComment_by_id` int(11) NOT NULL,
   PRIMARY KEY (`UBcomment_id`),
   KEY `user_usercomment_UBComment_by_id_24c9706a_fk_user_user` (`UBComment_by_id`),
-  CONSTRAINT `user_usercomment_UBComment_by_id_24c9706a_fk_user_user` FOREIGN KEY (`UBComment_by_id`) REFERENCES `user_useraccount` (`Uid`)
+  CONSTRAINT `user_usercomment_UBComment_by_id_24c9706a_fk_user_user` FOREIGN KEY (`UBComment_by_id`) REFERENCES `user_userbaseinfo` (`UBid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -448,6 +452,63 @@ CREATE TABLE `user_usercomment` (
 LOCK TABLES `user_usercomment` WRITE;
 /*!40000 ALTER TABLE `user_usercomment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_usercomment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_userfollower`
+--
+
+DROP TABLE IF EXISTS `user_userfollower`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_userfollower` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `UF_friend_id_id` int(11) NOT NULL,
+  `UF_uid_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_userfollower_UF_friend_id_id_e05c53d9_fk_user_user` (`UF_friend_id_id`),
+  KEY `user_userfollower_UF_uid_id_5a38a7b4_fk_user_userbaseinfo_UBid` (`UF_uid_id`),
+  CONSTRAINT `user_userfollower_UF_friend_id_id_e05c53d9_fk_user_user` FOREIGN KEY (`UF_friend_id_id`) REFERENCES `user_userbaseinfo` (`UBid`),
+  CONSTRAINT `user_userfollower_UF_uid_id_5a38a7b4_fk_user_userbaseinfo_UBid` FOREIGN KEY (`UF_uid_id`) REFERENCES `user_userbaseinfo` (`UBid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_userfollower`
+--
+
+LOCK TABLES `user_userfollower` WRITE;
+/*!40000 ALTER TABLE `user_userfollower` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_userfollower` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_userjournal`
+--
+
+DROP TABLE IF EXISTS `user_userjournal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_userjournal` (
+  `UJ_id` int(11) NOT NULL AUTO_INCREMENT,
+  `UJ_title` varchar(50) NOT NULL,
+  `UJ_content` longtext NOT NULL,
+  `UJ_create_date` date NOT NULL,
+  `UJ_update_date` date NOT NULL,
+  `UJ_uid_id` int(11) NOT NULL,
+  PRIMARY KEY (`UJ_id`),
+  KEY `user_userjournal_UJ_uid_id_d9c04c86_fk_user_userbaseinfo_UBid` (`UJ_uid_id`),
+  CONSTRAINT `user_userjournal_UJ_uid_id_d9c04c86_fk_user_userbaseinfo_UBid` FOREIGN KEY (`UJ_uid_id`) REFERENCES `user_userbaseinfo` (`UBid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_userjournal`
+--
+
+LOCK TABLES `user_userjournal` WRITE;
+/*!40000 ALTER TABLE `user_userjournal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_userjournal` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -479,6 +540,35 @@ LOCK TABLES `user_usernewsmeta` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_userresource`
+--
+
+DROP TABLE IF EXISTS `user_userresource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_userresource` (
+  `R_id` int(11) NOT NULL AUTO_INCREMENT,
+  `R_name` varchar(50) NOT NULL,
+  `R_price` double NOT NULL,
+  `R_url` varchar(200) NOT NULL,
+  `R_has` tinyint(1) NOT NULL,
+  `R_uid_id` int(11) NOT NULL,
+  PRIMARY KEY (`R_id`),
+  KEY `user_userresource_R_uid_id_ba3e380b_fk_user_userbaseinfo_UBid` (`R_uid_id`),
+  CONSTRAINT `user_userresource_R_uid_id_ba3e380b_fk_user_userbaseinfo_UBid` FOREIGN KEY (`R_uid_id`) REFERENCES `user_userbaseinfo` (`UBid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_userresource`
+--
+
+LOCK TABLES `user_userresource` WRITE;
+/*!40000 ALTER TABLE `user_userresource` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_userresource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_vocabulary`
 --
 
@@ -506,6 +596,41 @@ LOCK TABLES `user_vocabulary` WRITE;
 /*!40000 ALTER TABLE `user_vocabulary` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_vocabulary` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user_wordset`
+--
+
+DROP TABLE IF EXISTS `user_wordset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_wordset` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `WS_voc_book` varchar(20) NOT NULL,
+  `WS_pronunciation` int(11) NOT NULL,
+  `WS_translate_en` tinyint(1) NOT NULL,
+  `WS_translate_cn` tinyint(1) NOT NULL,
+  `WS_voc_auto_pron` tinyint(1) NOT NULL,
+  `WS_sentence_auto_pron` tinyint(1) NOT NULL,
+  `WS_disp_note` tinyint(1) NOT NULL,
+  `WS_stu_degree` int(11) NOT NULL,
+  `WS_stu_times` int(11) NOT NULL,
+  `WS_stu_volume` int(11) NOT NULL,
+  `WS_id_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_wordset_WS_id_id_f803091b_fk_user_useraccount_id` (`WS_id_id`),
+  CONSTRAINT `user_wordset_WS_id_id_f803091b_fk_user_useraccount_id` FOREIGN KEY (`WS_id_id`) REFERENCES `user_useraccount` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_wordset`
+--
+
+LOCK TABLES `user_wordset` WRITE;
+/*!40000 ALTER TABLE `user_wordset` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_wordset` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -516,4 +641,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-31 22:49:00
+-- Dump completed on 2018-01-01 16:41:31
