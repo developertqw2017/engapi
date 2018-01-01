@@ -7,7 +7,7 @@ import hashlib
 r = redis.StrictRedis(host = 'localhost', port = '6379', db = 0)
 
 class usSystem(object):
-    def __init__(self, requestm response = None, uid = 0, **kwargs):
+    def __init__(self, request, response = None, uid = 0, **kwargs):
         self.request = request
         self.response = response
         self.kwargs = kwargs
@@ -19,9 +19,9 @@ class usSystem(object):
         if self.request.session.test_cookie_worked():
             self.request.session.delete_test_cookie()
             return True
-    return False
+        return False
 
-    def getUsobj(self):
+    def getUsObj(self):
         """返回用户对象，有则说明用户已登陆，无则注销"""
         self.sessionid = self.request.COOKIES.get('sessionid',None)
         if r.exists(self.sessionid):
