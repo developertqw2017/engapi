@@ -135,3 +135,64 @@ SESSION_REDIS_PREFIX = 'session'
 # If you prefer domain socket connetction, you can just add this line instead of SESSION_REDIS_HOST and SESSION_REDIS_PORT.
 
 SESSION_REDIS_UNIX_DOMAIN_SOCKET_PATH = '/var/run/redis/redis.sock'
+
+#On Django >= 1.3:
+# When using TCP connections
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '<host>:<port>',
+        'OPTIONS': {
+            'DB': 1,
+            'PASSWORD': 'yadayada',
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': 50,
+                'timeout': 20,
+            }
+        },
+    },
+
+}
+
+# When using unix domain sockets
+# Note: ``LOCATION`` needs to be the same as the ``unixsocket`` setting
+# in your redis.conf
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '/path/to/socket/file',
+        'OPTIONS': {
+            'DB': 1,
+            'PASSWORD': 'tqw503417',
+            'PARSER_CLASS': 'redis.connection.HiredisParser'
+        },
+    },
+}
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',# This must be first on the list
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware', # This must be last
+)
+
+#这里是TCP连接
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        'OPTIONS': {
+            'DB': 0,
+            'PASSWORD': '', # 这里没有设置密码
+            # 'PARSER_CLASS': 'redis.connection.HiredisParser',  # 这段可先注释掉否则出现 :Hiredis is not installed的错误
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': 50,
+                'timeout': 20,
+            }
+        },
+    },
+
+}
