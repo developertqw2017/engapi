@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from user.models import UserAccount,UserComment,UserBaseInfo,News,UserNewsMeta,Vocabulary,ExmSentence, WordSet, UserResource, UserJournal
 from datetime import date,datetime
 import json
@@ -137,3 +137,23 @@ def usLogin(request):
     request.session.set_test_cookie()
     return render(request, 'rebbs/login.html', context)
 
+from qiniu import Auth,put_file
+import qiniu.config
+
+
+# 定义获取七牛服务器上的tocken
+
+#@login_required
+#@require_http_methods(['GET'])
+def get_token(request):
+    # 1. 先要设置AccessKey和SecretKey
+    access_key = "yLAD0JMxDrx5eqHUVWbSiAKTonSL8DfY372l9AO6"
+    secret_key = "179S3CXzY1r4BCJm1wZmUAA3wcDI2oUshchjGwQd"
+    # 2. 授权
+    q = Auth(access_key, secret_key)
+    # 3. 设置七牛空间(自己刚刚创建的)
+    bucket_name = 'tuchuang'
+    # 4. 生成token
+    token = q.upload_token(bucket_name)
+    # 5. 返回token,key必须为uptoken
+    return JsonResponse({'uptoken': token})
