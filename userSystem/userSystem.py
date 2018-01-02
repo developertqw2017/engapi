@@ -1,4 +1,3 @@
-#coding=utf-8
 #Redis实现用户系统
 
 import redis

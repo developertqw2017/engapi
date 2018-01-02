@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'delresouce/',views.delUserResouce),
     url(r'addUserResouce/',views.addUserResouce),
     url(r'UserJournal/(\${1,20})/$',views.UserJournal),
-    url(r'usLogin/$',views.usLogin),
+    url(r'usLogin$',views.usLogin),
 ]
 
 

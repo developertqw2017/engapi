@@ -5,10 +5,18 @@ from datetime import date,datetime
 import json
 from django.http import HttpResponseRedirect
 import redis
-import datetime
-from common import userSystem
+from userSystem import userSystem
 import urllib
 # Create your views here.
+class CJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, date):
+            return obj.strftime('%Y-%m-%d')
+        else:
+            return json.JSONEncoder.default(self, obj)
+
 
 def index(request):
     return HttpResponse("这里是emoji英语学习！")
@@ -25,7 +33,7 @@ def showComment(request, Comid):
     Comid = urllib.parse.unquote(Comid)
     UComment = UserComment.objects.get(UBcomment_id = Comid)
     UComment.__delattr__('_state')
-    resp = json.dumps(UComment.__dict__)
+    resp = json.dumps(UComment.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
 
 #@Nid 新闻唯一id
@@ -33,7 +41,7 @@ def showNews(request, Nid):
     Nid = urllib.parse.unquote(Nid)
     Ncontent = News.objects.get(Nid = Nid)
     Ncontent.__delattr__('_state')
-    resp = json.dumps(Ncontent.__dict__)
+    resp = json.dumps(Ncontent.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
 
 #@Nauthor 新闻作者
@@ -41,7 +49,7 @@ def showNews_by_author(request, Nauthor):
     Nauthor = urllib.parse.unquote(Nauthor)
     Ncontent = News.objects.get(Nauthor = Nauthor)
     Ncontent.__delattr__('_state')
-    resp = json.dumps(Ncontent.__dict__)
+    resp = json.dumps(Ncontent.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
 
 #@Ntitle_cn 新闻中文标题
@@ -49,7 +57,7 @@ def showNews_by_title_cn(request, Ntitle_cn):
     Ntitle_cn = urllib.parse.unquote(Ntitle_cn)
     Ncontent = News.objects.get(Ntitle_cn = Ntitle_cn)
     Ncontent.__delattr__('_state')
-    resp = json.dumps(Ncontent.__dict__)
+    resp = json.dumps(Ncontent.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
 
 #@Ntitle_en 新闻英文标题
@@ -57,7 +65,7 @@ def showNews_by_title_en(request, Ntitle_en):
     Ntitle_en = urllib.parse.unquote(Ntitle_en)
     Ncontent = News.objects.get(Ntitle_en = Ntitle_en)
     Ncontent.__delattr__('_state')
-    resp = json.dumps(Ncontent.__dict__)
+    resp = json.dumps(Ncontent.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
 
 #@wordset 单词设置表单
@@ -72,7 +80,7 @@ def UserResouce(request):
     if request.method == 'POST':
         uid = request.POST['uid']
         resouce_resp = UserResource.objects.get(R_uid = uid)
-        resp = resouce_resp.__delattr('_state')
+        resp = resouce_resp.__delattr('_state', cls = CJsonEncoder)
         return HttpResponse(resp)
 
 #@R_id 资源唯一id
@@ -96,7 +104,7 @@ def UserJournal(request, uid):
     Journal = UserJournal.objects.get(UJ_id = uid)
     for x in range(len(Journal)):
         Journal[x].__delattr__('_state')
-        resp = json.dumps(Journal)
+        resp = json.dumps(Journal, cls = CJsonEncoder)
         return HttpResponse(resp)
 
 
@@ -116,26 +124,27 @@ def usLogin(request):
         us = request.POST['user_account']
         pwd = request.POST['password']
         #if r.exists('us:%s:id' %us)        # 检查是否存在该用户关系键值
-        upass, uid = UserAccount.objects.get(Uname = us).vlues('Upass','Uid')
+        upass, uid = UserAccount.objects.all().values_list('Upass','Uid').get(Uname = us)
         # 获取该用户在user表中对应的id
         # 校验成功
         if upass == pwd:
             r = redis.StrictRedis(host='localhost',port='6379',db=0)
             r.hincrby('user:%s' %us, 'login_count', 1)     # 登陆次数累加
-            r.hset('user:%s' %us, 'last_login_date', datetime.datetime.now())  # 添加最近登陆
+            r.hset('user:%s' %us, 'last_login_date', datetime.now())  # 添加最近登陆
             # set Cookies
             res = HttpResponseRedirect('/English/header.php')
-            ussys = userSystem(request, res, uid)
-            #            if ussys.testCookie():
-            if ussys.testCookie() and ussys.setCookieAndSession():
-                #             if ussys.setCookieAndSession():
-                return res
+            ussys = userSystem.usSystem(request, res, uid)
+            if ussys.testCookie():
+                if ussys.testCookie() and ussys.setCookieAndSession():
+                    if ussys.setCookieAndSession():
+                        return res
             context['us'] = us
             context['pwd'] = pwd
             context['msg'] = u'账号或密码错误'
 
     request.session.set_test_cookie()
-    return render(request, 'rebbs/login.html', context)
+    print(request.COOKIES)
+    return HttpResponseRedirect("http://120.76.140.147:80/EnglishStu/header.php")
 
 from qiniu import Auth,put_file
 import qiniu.config
