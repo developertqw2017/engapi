@@ -132,15 +132,14 @@ def usLogin(request):
             r.hincrby('user:%s' %us, 'login_count', 1)     # 登陆次数累加
             r.hset('user:%s' %us, 'last_login_date', datetime.now())  # 添加最近登陆
             # set Cookies
-            res = HttpResponseRedirect('/English/header.php')
+            res = HttpResponseRedirect("http://120.76.140.147:80/EnglishStu/header.php")
             ussys = userSystem.usSystem(request, res, uid)
-            if ussys.testCookie():
-                if ussys.testCookie() and ussys.setCookieAndSession():
-                    if ussys.setCookieAndSession():
-                        return res
-            context['us'] = us
-            context['pwd'] = pwd
-            context['msg'] = u'账号或密码错误'
+            if ussys.testCookie() and ussys.setCookieAndSession():
+                print(request.COOKIES)
+                return res
+        context['us'] = us
+        context['pwd'] = pwd
+        context['msg'] = u'账号或密码错误'
 
     request.session.set_test_cookie()
     print(request.COOKIES)

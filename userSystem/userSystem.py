@@ -30,7 +30,7 @@ class usSystem(object):
 
     def setCookieAndSession(self):
         """cookie在登陆成功后已经写入"""
-        self.sessionid = self.request.COOKIEDS.get('sessionid', None)
+        self.sessionid = self.request.COOKIES.get('sessionid', None)
         if not self.sessionid:
             #set cookie
             h = hashlib.md5()
