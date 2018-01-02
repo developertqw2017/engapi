@@ -119,32 +119,19 @@ def index(request):
 
 
 def usLogin(request):
-    context = {}
-    if request.method == 'POST':
-        us = request.POST['user_account']
-        pwd = request.POST['password']
-        #if r.exists('us:%s:id' %us)        # 检查是否存在该用户关系键值
-        upass, uid = UserAccount.objects.all().values_list('Upass','Uid').get(Uname = us)
-        # 获取该用户在user表中对应的id
-        # 校验成功
-        if upass == pwd:
-            r = redis.StrictRedis(host='localhost',port='6379',db=0)
-            r.hincrby('user:%s' %us, 'login_count', 1)     # 登陆次数累加
-            r.hset('user:%s' %us, 'last_login_date', datetime.now())  # 添加最近登陆
-            # set Cookies
-            res = HttpResponseRedirect("http://120.76.140.147:80/EnglishStu/header.php")
-            ussys = userSystem.usSystem(request, res, uid)
-            if ussys.testCookie() and ussys.setCookieAndSession():
-                print(request.COOKIES)
-                return res
-        context['us'] = us
-        context['pwd'] = pwd
-        context['msg'] = u'账号或密码错误'
+    m = UserAccount.objects.get(Uaccount=request.POST['username'])
+    if m.Upass == request.POST['password']:
+        request.session['member_id'] = m.id
+        return HttpResponse("You're logged in.")
+    else:
+        return HttpResponse("Your username and password didn't match.")
 
-    request.session.set_test_cookie()
-    print(request.COOKIES)
-    return HttpResponseRedirect("http://120.76.140.147:80/EnglishStu/header.php")
-
+def logout(request):
+    try:
+        del request.session['member_id']
+    except KeyError:
+        pass
+    return HttpResponse("You're logged out.")
 from qiniu import Auth,put_file
 import qiniu.config
 
@@ -165,3 +152,22 @@ def get_token(request):
     token = q.upload_token(bucket_name)
     # 5. 返回token,key必须为uptoken
     return JsonResponse({'uptoken': token})
+
+def verifySession(request):
+    ss = request.body.decode()
+    print(ss)
+    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
+    usSys = userSystem.usSystem(request)
+    print(request)
+    print(request.COOKIES.get('sessionid', None))
+    print(usSys.getUsObj(),'ver')
+    a = usSys.getUsObj()
+    todo_list = [
+        {"id":"1","content":"a"}
+    ]
+    response = HttpResponse(json.dumps(todo_list))
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+    return response

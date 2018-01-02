@@ -1,3 +1,4 @@
+#coding=utf-8
 #Redis实现用户系统
 
 import redis
@@ -15,6 +16,7 @@ class usSystem(object):
 
     def testCookie(self):
         """事先在登陆方法中下了request.session.set_test_cookie()的套子"""
+        print(self.request.session.test_cookie_worked(),'test')
         if self.request.session.test_cookie_worked():
             self.request.session.delete_test_cookie()
             return True
@@ -31,6 +33,7 @@ class usSystem(object):
     def setCookieAndSession(self):
         """cookie在登陆成功后已经写入"""
         self.sessionid = self.request.COOKIES.get('sessionid', None)
+        print(self.sessionid,'set')
         if not self.sessionid:
             #set cookie
             h = hashlib.md5()
