@@ -1,12 +1,14 @@
-from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from user.models import UserAccount,UserComment,UserBaseInfo,News,UserNewsMeta,Vocabulary,ExmSentence, WordSet, UserResource, UserJournal
+from django.shortcuts import render,redirect
 from datetime import date,datetime
 import json
 from django.http import HttpResponseRedirect
 import redis
 from userSystem import userSystem
 import urllib
+from django.contrib.auth import authenticate,login,logout
+from tools.forms import LoginForm
 # Create your views here.
 class CJsonEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -18,10 +20,12 @@ class CJsonEncoder(json.JSONEncoder):
             return json.JSONEncoder.default(self, obj)
 
 
-def index(request):
-    return HttpResponse("这里是emoji英语学习！")
 #@Uid 用户名唯一id
 def showUserBaseInfo(request, Uid):
+    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
+    sessionid = request.COOKIES.get('sessionid',None)
+    if not r.exists(sessionid):
+        return HttpResponseRedirect("https://120.76.140.147/English/login.php")
     Uid = urllib.parse.unquote(Uid)
     UBinfo = UserBaseInfo.objects.get(UBid = Uid)
     UBinfo.__delattr__('_state')
@@ -43,7 +47,6 @@ def showNews(request, Nid):
     Ncontent.__delattr__('_state')
     resp = json.dumps(Ncontent.__dict__, cls = CJsonEncoder)
     return HttpResponse(resp)
-
 #@Nauthor 新闻作者
 def showNews_by_author(request, Nauthor):
     Nauthor = urllib.parse.unquote(Nauthor)
@@ -111,18 +114,17 @@ def UserJournal(request, uid):
 
 
 def index(request):
-    art = {}
-    if request.user.is_authenticated():
-        art['form'] =  "ok"
-        return render(request,"rebbs/index.html",art)
+    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
+    sessionid = request.COOKIES.get('sessionid',None)
+    if not r.exists(sessionid):
+        return HttpResponseRedirect("https://120.76.140.147/English/login.php")
 
 
-
-def usLogin(request):
+def userlogin(request):
     m = UserAccount.objects.get(Uaccount=request.POST['username'])
     if m.Upass == request.POST['password']:
         request.session['member_id'] = m.id
-        return HttpResponse("You're logged in.")
+        return HttpResponseRedirect("http://120.76.140.147/EnglishStu/header.php")
     else:
         return HttpResponse("Your username and password didn't match.")
 
@@ -131,7 +133,7 @@ def logout(request):
         del request.session['member_id']
     except KeyError:
         pass
-    return HttpResponse("You're logged out.")
+    return HttpResponseRedirect("https://120.76.140.147/English/login.php")
 from qiniu import Auth,put_file
 import qiniu.config
 
@@ -153,21 +155,67 @@ def get_token(request):
     # 5. 返回token,key必须为uptoken
     return JsonResponse({'uptoken': token})
 
-def verifySession(request):
-    ss = request.body.decode()
-    print(ss)
-    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
-    usSys = userSystem.usSystem(request)
-    print(request)
-    print(request.COOKIES.get('sessionid', None))
-    print(usSys.getUsObj(),'ver')
-    a = usSys.getUsObj()
-    todo_list = [
-        {"id":"1","content":"a"}
-    ]
-    response = HttpResponse(json.dumps(todo_list))
-    response["Access-Control-Allow-Origin"] = "*"
-    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
-    response["Access-Control-Max-Age"] = "1000"
-    response["Access-Control-Allow-Headers"] = "*"
-    return response
+#def verifySession(request):
+#    ss = request.body.decode()
+#    print(ss)
+#    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
+#    usSys = userSystem.usSystem(request)
+#    print(request)
+#    print(request.COOKIES.get('sessionid', None))
+#    print(usSys.getUsObj(),'ver')
+#   a = usSys.getUsObj()
+#    todo_list = [
+#        {"id":"1","content":"a"}
+#    ]
+#    response = HttpResponse(json.dumps(todo_list))
+#    response["Access-Control-Allow-Origin"] = "*"
+#    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+#    response["Access-Control-Max-Age"] = "1000"
+#    response["Access-Control-Allow-Headers"] = "*"
+#    return response
+
+
+url_header = "http://120.76.140.147/EnglishStu/header.php"
+url_login = "http://120.76.140.147/EnglishStu/login.php"
+
+def usLogin(request):
+    username=request.POST.GET("usernmae")  # 获取用户名
+    password=request.POST.GET("password")  # 获取用户的密码
+
+    user=authenticate(username=username,password=password) # 验证用户名和密码，返回用户对象
+
+    if user:      # 如果用户对象存在
+        login(request,user)   # 用户登陆
+        return redirect(url_header)
+
+    else:
+        return HttpResponse("用户名或密码错误")
+
+def logout_view(request):
+
+    logout(request)  # 注销用户
+    return redirect(url_login)
+
+def view1(request):
+    if not request.user.is_authenticated():
+        return redirect(url_login)
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(username=cd['username'],
+                                password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated successfully')
+                else:
+                    return HttpResponse('Disabled account')
+        else:
+            return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+    return render(request, 'account/login.html', {'form': form})

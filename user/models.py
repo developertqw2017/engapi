@@ -15,7 +15,7 @@ class UserBaseInfo(models.Model):
     UBfollowing_num = models.IntegerField()
     UBfollower_num = models.IntegerField()
     UBreading_num = models.IntegerField()
- 
+
 class UserComment(models.Model):
     UBcomment_id = models.AutoField(max_length = 4, primary_key = True)
     UBcomment_date = models.DateTimeField(default = datetime.datetime.now())
