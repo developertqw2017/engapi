@@ -1,0 +1,11 @@
+.errorlist {
+    color:      red;
+}
+
+p {
+    padding-left:   5px;
+}
+
+#id_description {
+    display:        block;
+}

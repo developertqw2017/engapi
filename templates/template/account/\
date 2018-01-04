@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>英语学习助手</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="http://oo76sfs46.bkt.clouddn.com/bootstrap.min.css" rel="stylesheet">
+<link href="http://oo76sfs46.bkt.clouddn.com/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+        rel="stylesheet">
+<link href="http://oo76sfs46.bkt.clouddn.com/font-awesome.css" rel="stylesheet">
+<link href="http://oo76sfs46.bkt.clouddn.com/style.css" rel="stylesheet">
+<link href="http://oo76sfs46.bkt.clouddn.com/signin.css" rel="stylesheet">
+<script src="http://oo76sfs46.bkt.clouddn.com/jquery-1.7.2.min.js"></script>
+    <script src="http://oo76sfs46.bkt.clouddn.com/bootstrap.js"></script>
+    <script src="http://oo76sfs46.bkt.clouddn.com/base.js"></script>
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<style>
+.widget{
+    box-shadow:2px 1px 3px #333333;
+}
+</style>
+
+</head>
+<body>
+<div class="account-container">
+
+	<div class="content clearfix">
+        {% block content %}
+        {% endblock %}
+
+	</div> <!-- /content -->
+
+</div> <!-- /account-container -->
+<script src="http://oo76sfs46.bkt.clouddn.com/js/login_base.js"></script>
+<script>
+var xmlHttp;
+function login()
+{
+    xmlHttp=GetXmlHttpObject();
+    if (xmlHttp==null)
+    {
+        alert ("Browser does not support HTTP Request");
+        return
+
+    }
+    var url="function/login.php";
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    url=url+"?username="+username+"&password="+password;
+    console.log(url);
+    xmlHttp.onreadystatechange=stateChanged;
+    xmlHttp.open("GET",url,true);
+    xmlHttp.send(null)
+
+}
+
+function stateChanged()
+{
+    if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete")
+    {
+    }
+
+}
+
+function GetXmlHttpObject()
+{
+    var xmlHttp=null;
+    try
+    {
+        // Firefox, Opera 8.0+, Safari
+        xmlHttp=new XMLHttpRequest();
+
+    }
+    catch (e)
+    {
+        //Internet Explorer
+        try
+        {
+            xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (e)
+        {
+            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    return xmlHttp;
+}
+
+</script>
+<body/>
+<html/>

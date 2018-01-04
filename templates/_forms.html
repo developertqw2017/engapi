@@ -1,0 +1,12 @@
+<form action="{% if action %}{{ action }}{% else %}.{% endif %}"
+      method="{% if method %}{{ method }}{% else %}post{% endif %}"
+      class="{% if layout %}{{ layout }}{% else %}col-md-4{% endif %}">
+    {% for field in form %}
+      <div class="form-group">
+          {{ field.label_tag }}
+          {{ field }}
+      </div>
+    {% endfor %}
+    {% csrf_token %}
+    <p><input type="submit" value="{{ submit }}" class="btn btn-default"></p>
+</form>

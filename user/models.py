@@ -1,7 +1,40 @@
 from django.db import models
+from django.conf import settings
+from django.contrib.auth.models import User
 import datetime
 
-# Create your models here.
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name="用户",
+                                on_delete=models.CASCADE)
+    birthday = models.DateField("生日", blank=True, null=True)
+    photo = models.ImageField("头像", upload_to="users/%Y/%m/%d", blank=True)
+
+    def __str__(self):
+        return "{} 的个人资料".format(self.user.username)
+
+    class Meta:
+        verbose_name = verbose_name_plural = "个人资料"
+
+
+class Contact(models.Model):
+    user_from = models.ForeignKey(User, related_name="rel_from_set",
+                                  verbose_name="关注者", on_delete = models.CASCADE)
+    user_to = models.ForeignKey(User, related_name="rel_to_set",
+                                verbose_name="关注目标", on_delete = models.CASCADE)
+    created = models.DateTimeField("创建时间", auto_now_add=True,
+                                   db_index=True)
+
+    class Meta:
+        ordering = ("-created",)
+
+    def __str__(self):
+        return "{} 关注 {}".format(self.user_from, self.user_to)
+
+
+User.add_to_class("following", models.ManyToManyField("self",
+                                                      through=Contact,
+                                                      related_name="followers",
+                                                      symmetrical=False))
 
 class UserBaseInfo(models.Model):
     UBage = models.IntegerField()

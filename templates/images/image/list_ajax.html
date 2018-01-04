@@ -1,0 +1,29 @@
+{% load thumbnail %}
+{% load image_tags %}
+
+<section class="container">
+{% for image in images %}
+        {% if forloop.counter|mod:4 == 1 %}
+            <div class="row">
+        {% endif %}
+
+        <div class="image col-md-3">
+            <a href="{{ image.get_absolute_url }}" class="thumbnail">
+                {% thumbnail image.image "250x250" crop="100%" as im %}
+                    <img src="{{ im.url }}" class="img-rounded">
+                {% endthumbnail %}
+            </a>
+            <div class="info caption">
+                <h3>{{ image.title|truncatechars:12 }}</h3>
+                <p>{{ image.description|truncatewords:30 }}</p>
+                <p><a href="{{ image.get_absolute_url }}" class="btn btn-primary">
+                    图片详情
+                </a></p>
+            </div>
+        </div>
+
+        {% if forloop.counter|mod:4 == 0 %}
+            </div>
+        {% endif %}
+{% endfor %}
+</section>

@@ -1,0 +1,53 @@
+{% load thumbnail %}
+{% load image_tags %}
+
+<div>
+{% for action in actions %}
+	{% with user=action.user profile=action.user.profile %}
+	<div class="row">
+		<div class="media well col-md-6">
+			<div class="media-left">
+				{% if profile.photo %}
+					{% thumbnail profile.photo "80x80" crop="100%" as im %}
+						<a href="{{ user.get_absolute_url }}">
+							<img src="{{ im.url }}" alt="{{ user.username }}" class="media-object">
+						</a>
+					{% endthumbnail %}
+				{% endif %}
+			</div>
+			<div class="media-right">
+				{% if action.target %}
+					{% with target=action.target %}
+						{% if target.image %}
+							{% thumbnail target.image "80x80" crop="100%" as im %}
+								<a href="{{ target.get_absolute_url }}">
+									<img src="{{ im.url }}" class="media-object">
+								</a>
+							{% endthumbnail %}
+						{% endif %}
+					{% endwith %}
+				{% endif %}
+			</div>
+
+			<div class="media-body">
+				<p>
+					<span class="media-heading">
+						{{ action.created|since }} 以前
+					</span>
+					<br />
+					<a href="{{ user.get_absolute_url }}">
+						{{ user.username }}
+					</a>
+					{{ action.verb }}
+					{% if action.target %}
+						{% with target=action.target %}
+							<a href="{{ target.get_absolute_url }}">{{ target }}</a>
+						{% endwith %}
+					{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
+	{% endwith %}
+{% endfor %}
+</div>

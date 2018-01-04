@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}修改你的资料{% endblock %}
+
+{% block content %}
+<h1 class="page-header">修改你的资料</h1>
+<form action="." method="post" enctype="multipart/form-data">
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    {% csrf_token %}
+    <p><input class="btn btn-default" type="submit" value="保存修改"></p>
+</form>
+{% endblock %}

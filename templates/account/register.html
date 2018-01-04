@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+
+{% block title %}创建账号{% endblock %}
+
+{% block content %}
+<h1 class="page-header">加入我们</h1>
+
+<form action="." method="post" class="col-md-4">
+    {{ user_form.as_p }}
+    {% csrf_token %}
+    <span class="login-checkbox">
+        <input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4">
+        <label class="choice" for="Field">同意的条款和条件.</label>
+    </span>
+    <p><input type="submit" value="注册" class="button btn btn-primary btn-large" ></p>
+</form>
+
+{% endblock %}

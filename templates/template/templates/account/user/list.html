@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load image_tags %}
+
+{% block title %}人们{% endblock %}
+
+{% block content %}
+<h1 class="page-header">人们</h1>
+
+<div class="container">
+    {% for user in users %}
+        {% if forloop.counter|mod:4 == 1 %}
+            <div class="row">
+        {% endif %}
+
+        <div class="image col-md-3">
+            <a href="{{ user.get_absolute_url }}">
+                {% thumbnail user.profile.photo "250x250" crop="100%" as im %}
+                    <img src="{{ im.url }}" class="img-circle">
+                {% endthumbnail %}
+            </a>
+            <div class="info caption">
+                <p class="text-center">
+                    <a href="{{ user.get_absolute_url }}" class="label label-default">{{ user.username }}</a>
+                </p>
+            </div>
+        </div>
+
+        {% if forloop.counter|mod:4 == 0 %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

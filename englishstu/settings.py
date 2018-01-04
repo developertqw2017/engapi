@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'user',
     'login',
     'corsheaders',
+    'actions',
+    'media',
+    'commons',
+    'images',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'englishstu.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/home/engapi/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,14 +84,20 @@ WSGI_APPLICATION = 'englishstu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'englishstu',
+#        'USER': 'root',
+#        'PASSWORD': 'tqw503417',
+#        'HOST': 'localhost',
+#        'PORT':'3306',
+#    }
+#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'englishstu',
-        'USER': 'root',
-        'PASSWORD': 'tqw503417',
-        'HOST': 'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -203,3 +213,35 @@ CACHES = {
 }
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+
+
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+# MEDIA设置
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# login相关设置
+#from django.core.urlresolvers import reverse_lazy
+#
+#LOGIN_REDIRECT_URL = reverse_lazy("dashboard")
+#LOGIN_URL = reverse_lazy("login")
+#LOGOUT_URL = reverse_lazy("logout")
+
+#ABSOLUTE_URL_OVERRIDES = {
+#    "auth.user": lambda u: reverse_lazy("user_detail", args=(u.username,))
+#}
+
+# 邮箱设置
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# thumbnail设置
+THUMBNAIL_DEBUG = True
+
+# redis设置
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+REDIS_DB = 0

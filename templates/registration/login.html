@@ -1,0 +1,27 @@
+{% extends "account/base.html" %}
+
+{% block title %}登入{% endblock %}
+
+{% block content %}
+    <h1 class="page-header">登陆</h1>
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissiable">
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+            <strong>你的用户名和密码不匹配，请重新输入!</strong>
+        </div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="POST">
+        <div class="login-fields">
+        {{ form.as_p }}
+        {% csrf_token %}
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <p><input type="submit" value="登陆" class="btn btn-default"></p>
+        <p>还没有账号？请点击<a href="{% url 'register' %}">注册</a></p>
+        <p>忘记密码？请<a href="{% url 'password_reset' %}">点击</a>重置密码</p>
+    </form>
+
+{% endblock %}

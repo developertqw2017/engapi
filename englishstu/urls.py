@@ -31,9 +31,15 @@ urlpatterns = [
     url(r'delresouce/',views.delUserResouce),
     url(r'addUserResouce/',views.addUserResouce),
     url(r'UserJournal/(\${1,20})/$',views.UserJournal),
-    url(r'usLogin$',views.usLogin),
-    url(r'login/$', views.user_login, name='login'),
-
+    url(r'account/', include('user.urls')),
+    url(r"^$", views.dashboard, name="dashboard"),
+    url(r"^register/$", views.register, name="register"),
+    url(r"^edit/$", views.edit, name="edit"),
+    # people
+    url(r"^users/$", views.user_list, name="user_list"),
+    url(r"^users/follow/$", views.user_follow, name="user_follow"),
+    url(r"^users/(?P<username>[-\w]+)/$", views.user_detail ,name="user_detail"),
+    url(r"accounts/profile/$", views.indexpage,name="indexpage"),
 ]
 
 

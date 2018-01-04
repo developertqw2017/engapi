@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}收藏一张图片{% endblock %}
+
+{% block content %}
+<h1 class="page-header">收藏一章图片</h1>
+<img src="{{ request.GET.url }}" class="col-md-6">
+<form action="." method="post" class="col-md-4">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input class="btn btn-default" type="submit" value="收藏">
+</form>
+{% endblock %}
+
