@@ -1,4 +1,4 @@
-function action_to(page){
+(function(){function action_to(page){
     var xmlhttp1 = new XMLHttpRequest();
 
     xmlhttp1.onreadystatechange=function()
@@ -13,30 +13,16 @@ function action_to(page){
                 var jsNums = jsContained.length;
                 for (var i=0; i<jsNums; i++) {
                     var jsSection = jsContained[i].match(regGetJS);
-
                     if(jsSection[2]) {
                         if(window.execScript) {
                             window.execScript(jsSection[2]);
-
-
                         } else {
                             window.eval(jsSection[2]);
-
-
                         }
-
-
                     }
-
-
                 }
-
-
             }
-
-
         }
-
     }
     xmlhttp1.open("POST",page,true);
     xmlhttp1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -91,3 +77,4 @@ function signup_action_to()
     action_to("./signup.php");
 
 }
+})();

@@ -120,7 +120,6 @@ from datetime import date,datetime
 import json
 from django.http import HttpResponseRedirect
 import redis
-from userSystem import userSystem
 import urllib
 from django.contrib.auth import authenticate,login,logout
 from tools.forms import LoginForm
@@ -270,70 +269,8 @@ def get_token(request):
     # 5. 返回token,key必须为uptoken
     return JsonResponse({'uptoken': token})
 
-#def verifySession(request):
-#    ss = request.body.decode()
-#    print(ss)
-#    r = redis.StrictRedis(host = 'localhost',port = '6379',db = 0)
-#    usSys = userSystem.usSystem(request)
-#    print(request)
-#    print(request.COOKIES.get('sessionid', None))
-#    print(usSys.getUsObj(),'ver')
-#   a = usSys.getUsObj()
-#    todo_list = [
-#        {"id":"1","content":"a"}
-#    ]
-#    response = HttpResponse(json.dumps(todo_list))
-#    response["Access-Control-Allow-Origin"] = "*"
-#    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
-#    response["Access-Control-Max-Age"] = "1000"
-#    response["Access-Control-Allow-Headers"] = "*"
-#    return response
-
-
 url_header = "http://120.76.140.147/EnglishStu/header.php"
 url_login = "http://120.76.140.147/EnglishStu/login.php"
-
-def usLogin(request):
-    username=request.POST.GET("usernmae")  # 获取用户名
-    password=request.POST.GET("password")  # 获取用户的密码
-
-    user=authenticate(username=username,password=password) # 验证用户名和密码，返回用户对象
-
-    if user:      # 如果用户对象存在
-        login(request,user)   # 用户登陆
-        return redirect(url_header)
-
-    else:
-        return HttpResponse("用户名或密码错误")
-
-def logout_view(request):
-
-    logout(request)  # 注销用户
-    return redirect(url_login)
-
-def view1(request):
-    if not request.user.is_authenticated():
-        return redirect(url_login)
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username=cd['username'],
-                                password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
-        else:
-            return HttpResponse('Invalid login')
-    else:
-        form = LoginForm()
-    return render(request, 'account/login.html', {'form': form})
 
 def indexpage(request):
     return redirect(url_header)
